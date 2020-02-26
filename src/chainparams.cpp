@@ -120,12 +120,18 @@ public:
         genesis = CreateGenesisBlock(1559660400, 3423714883, 0x1d00ffff, 1,
                                      50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock ==
-               uint256S("0000000038e62464371566f6a8d35c01aa54a7da351b2dbf85d92f"
-                        "30357f3a90"));
-        assert(genesis.hashMerkleRoot ==
-               uint256S("95d9f62f327ebae0d88f38c72224407e5dde5157f952cdb70921c2"
-                        "dda326f35b"));
+
+		        while (genesis.GetHash() > uint256("0x00000ffff000000000000000000000000"
+                                           "0000000000000000000000000000000")) {
+            genesis.nNonce++;
+            if (genesis.nNonce % 128 == 0)
+                printf("\rnonce %08x", genesis.nNonce);
+        }
+        printf("genesis is %s\n", genesis.ToString().c_str());
+
+
+        //assert(consensus.hashGenesisBlock == uint256S("0000000038e62464371566f6a8d35c01aa54a7da351b2dbf85d92f30357f3a90"));
+        //assert(genesis.hashMerkleRoot == uint256S("95d9f62f327ebae0d88f38c72224407e5dde5157f952cdb70921c2dda326f35b"));
 
         // Note that of those which support the service bits prefix, most only
         // support a subset of possible options. This is fine at runtime as
@@ -160,16 +166,7 @@ public:
 
         checkpointData = {
             .mapCheckpoints = {
-                {5000, uint256S("000000000000000173c13a23fed27056b5a76912a27d62064cb988"
-                                 "db13888907")},
-                {50000, uint256S("00000000000000600f43cf743ca452b38d4cf175d588089c3c73ca"
-                                 "afbc0364cd")},
-                {110068, uint256S("00000000000000ab518cf852a114ff655ae01580d26727552a584c"
-                                 "62bcf40726")},
-                {110420, uint256S("000000000000007edbec10fadbf144be667309ceb4eec9a377bb95"
-                                 "0716c4d4a1")},
-                {131502, uint256S("00000000000000161d9356272df6aa2c551738634ecb6b4a16b7c8"
-                                 "a6bf62c14c")},
+                {5000, uint256S("0x001")},
             }};
 
         // Currently inaccurate but gives a better progress indicator
