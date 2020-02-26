@@ -121,7 +121,8 @@ public:
                                      50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
 
-		        while (genesis.GetHash() > uint256("0x00000ffff000000000000000000000000"
+		        while (genesis.GetHash() >
+               uint256S("0x00000ffff000000000000000000000000"
                                            "0000000000000000000000000000000")) {
             genesis.nNonce++;
             if (genesis.nNonce % 128 == 0)
